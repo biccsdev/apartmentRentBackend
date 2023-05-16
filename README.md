@@ -1,73 +1,84 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Apartment Booking Backend
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository contains the code for a series of APIs built with NestJS and Mongoose for the conection with the database ( MongoDB ) for an Apartment booking web app.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Diagrams](#diagrams)
+- [APIs](#apis)
+- [License](#license)
 
 ## Installation
 
-```bash
-$ npm install
+- Clone the repository
+- Navigate to the project's folder
+- Install dependencies: `npm install`
+- Run development `npm run start`
+- Run watch mode `npm run start:dev`
+
+# Diagrams
+
+## UML Class
+
+![classDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/4ba50024-52f7-4fad-bccf-ea6a96b2cc87)
+
+## UML Components
+
+![componentDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/b999c2e6-a4f1-4d77-b37d-2355e6b52cbd)
+
+# APIs
+
+## Authentication
+
+### POST /auth
+
+Creates a new User.
+
+Request Example:
+
+```
+POST /auth
 ```
 
-## Running the app
+Body
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+{
+    "name": "exampleName",
+    "password": "examplePass",
+    "email": "exampleEmail",
+    "phoneNumber": "5578849393",
+}
 ```
 
-## Test
+### POST /auth/login
 
-```bash
-# unit tests
-$ npm run test
+Logs in an account
 
-# e2e tests
-$ npm run test:e2e
+Request Example:
 
-# test coverage
-$ npm run test:cov
+```
+POST /login
 ```
 
-## Support
+Body
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+{
+    "email": "exampleEmail",
+    "password": "examplePass",
+}
+```
 
-## Stay in touch
+## Booking
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Apartment
 
-## License
+## Image
 
-Nest is [MIT licensed](LICENSE).
+# License
+
+MIT
