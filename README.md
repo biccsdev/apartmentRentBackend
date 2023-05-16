@@ -8,6 +8,7 @@ This repository contains the code for a series of APIs built with NestJS and Mon
 
 - [Installation](#installation)
 - [Diagrams](#diagrams)
+- [APIs](#apis)
 - [License](#license)
 
 ## Installation
@@ -20,11 +21,51 @@ This repository contains the code for a series of APIs built with NestJS and Mon
 # Diagrams
 ## UML Class
 
-![classDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/82d319cf-788c-455f-9e1c-1bedabd4159b)
+![classDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/4ba50024-52f7-4fad-bccf-ea6a96b2cc87)
 
 ## UML Components
 
 ![componentDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/b999c2e6-a4f1-4d77-b37d-2355e6b52cbd)
+
+
+# APIs
+## Authentication
+### POST /auth
+Creates a new User.
+
+Request Example:
+```
+POST /auth
+```
+Body
+``` 
+{
+    "name": "exampleName",
+    "password": "examplePass",
+    "email": "exampleEmail",
+    "phoneNumber": "5578849393",
+}
+```
+### POST /auth/login
+Logs in an account
+
+Request Example:
+```
+POST /login
+```
+Body
+``` 
+{
+    "email": "exampleEmail",
+    "password": "examplePass",
+}
+```
+
+## Booking
+## Apartment
+## Image
+
+
 
 # License
 
