@@ -11,30 +11,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://biccsdev:Kondas123@cluster0.ihoyt.mongodb.net/Apartments/users?retryWrites=true&w=majority',
-      {
-        connectionName: 'user',
-      },
+      'mongodb+srv://biccs:Kondas123@cluster0.ihoyt.mongodb.net/Apartments?retryWrites=true&w=majority',
     ),
-    MongooseModule.forRoot(
-      'mongodb+srv://biccsdev:Kondas123@cluster0.ihoyt.mongodb.net/Apartments/apartment?retryWrites=true&w=majority',
-      {
-        connectionName: 'apartment',
-      },
-    ),
-    MongooseModule.forRoot(
-      'mongodb+srv://biccsdev:Kondas123@cluster0.ihoyt.mongodb.net/Apartments/image?retryWrites=true&w=majority',
-      {
-        connectionName: 'image',
-      },
-    ),
-    MongooseModule.forRoot(
-      'mongodb+srv://biccsdev:Kondas123@cluster0.ihoyt.mongodb.net/Apartments/booking?retryWrites=true&w=majority',
-      {
-        connectionName: 'booking',
-      },
-    ),
-    ,
     AuthenticationModule,
     UserModule,
     BookingModule,

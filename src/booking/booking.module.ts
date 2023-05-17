@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, forwardRef } from '@nestjs/common';
 import { BookingController } from './booking.controller';
 import { BookingService } from './booking.service';
 import { Booking, BookingSchema } from './booking.schema';
@@ -9,35 +9,32 @@ import { User } from 'src/user/user.schema';
 import { Apartment } from 'src/apartment/apartment.schema';
 
 export const bookingModuleMongooseModules: DynamicModule[] = [
-  MongooseModule.forFeatureAsync(
-    [
-      {
-        imports: [UserModule, ApartmentModule],
-        name: Booking.name,
-        useFactory: () => {
-          const schema = BookingSchema;
+  MongooseModule.forFeatureAsync([
+    {
+      imports: [forwardRef(() => UserModule), ApartmentModule],
+      name: Booking.name,
+      useFactory: () => {
+        const schema = BookingSchema;
 
-          schema.virtual('User', {
-            ref: User.name,
-            localField: '_user',
-            foreignField: '_id',
-            justOne: true,
-          });
+        schema.virtual('User', {
+          ref: User.name,
+          localField: '_user',
+          foreignField: '_id',
+          justOne: true,
+        });
 
-          schema.virtual('Apartment', {
-            ref: Apartment.name,
-            localField: '_apartment',
-            foreignField: '_id',
-            justOne: true,
-          });
+        schema.virtual('Apartment', {
+          ref: Apartment.name,
+          localField: '_apartment',
+          foreignField: '_id',
+          justOne: true,
+        });
 
-          return schema;
-        },
-        inject: [],
+        return schema;
       },
-    ],
-    'booking',
-  ),
+      inject: [],
+    },
+  ]),
 ];
 
 @Module({

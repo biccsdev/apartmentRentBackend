@@ -21,8 +21,8 @@ export class User {
   @Prop({ type: Types.ObjectId, ref: 'Booking' })
   _booking: Types.ObjectId[];
 
-  @Prop()
-  booking: Booking[];
+  // @Prop()
+  // booking: Booking[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

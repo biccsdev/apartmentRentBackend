@@ -6,16 +6,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forFeature(
-      [{ name: ImageUpload.name, schema: ImageSchema }],
-      'image',
-    ),
+    MongooseModule.forFeature([
+      { name: ImageUpload.name, schema: ImageSchema },
+    ]),
   ],
   exports: [
-    MongooseModule.forFeature(
-      [{ name: ImageUpload.name, schema: ImageSchema }],
-      'image',
-    ),
+    MongooseModule.forFeature([
+      { name: ImageUpload.name, schema: ImageSchema },
+    ]),
   ],
   controllers: [ImageController],
   providers: [ImageService],

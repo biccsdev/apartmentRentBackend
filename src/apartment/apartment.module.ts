@@ -7,35 +7,32 @@ import { ImageModule } from 'src/image/image.module';
 import { ImageUpload } from 'src/image/image.schema';
 
 export const apartmentModuleMongooseModules: DynamicModule[] = [
-  MongooseModule.forFeatureAsync(
-    [
-      {
-        imports: [ImageModule],
-        name: Apartment.name,
-        useFactory: () => {
-          const schema = ApartmentSchema;
+  MongooseModule.forFeatureAsync([
+    {
+      imports: [ImageModule],
+      name: Apartment.name,
+      useFactory: () => {
+        const schema = ApartmentSchema;
 
-          schema.virtual('ImageUpload', {
-            ref: ImageUpload.name,
-            localField: '_thumbnail',
-            foreignField: '_id',
-            justOne: true,
-          });
+        schema.virtual('ImageUpload', {
+          ref: ImageUpload.name,
+          localField: '_thumbnail',
+          foreignField: '_id',
+          justOne: true,
+        });
 
-          schema.virtual('ImageUpload', {
-            ref: ImageUpload.name,
-            localField: '_photosUrls',
-            foreignField: '_id',
-            justOne: false,
-          });
+        schema.virtual('ImageUpload', {
+          ref: ImageUpload.name,
+          localField: '_photosUrls',
+          foreignField: '_id',
+          justOne: false,
+        });
 
-          return schema;
-        },
-        inject: [],
+        return schema;
       },
-    ],
-    'apartment',
-  ),
+      inject: [],
+    },
+  ]),
 ];
 
 @Module({
