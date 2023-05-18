@@ -9,18 +9,22 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { ApartmentService } from './apartment.service';
 import { ApartmentDocument } from './apartment.schema';
 import { CreateApartmentDTO } from './createApartment.dto';
+import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 
 @Controller('apartment')
 export class ApartmentController {
   constructor(private apartmentService: ApartmentService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.OK)
   async create(
+    @Body()
     createApartmentDto: CreateApartmentDTO,
   ): Promise<ApartmentDocument> {
     try {
@@ -31,6 +35,7 @@ export class ApartmentController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:_id')
   @HttpCode(HttpStatus.OK)
   async find(@Param() param: string): Promise<ApartmentDocument> {
@@ -42,6 +47,7 @@ export class ApartmentController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/:_id')
   @HttpCode(HttpStatus.OK)
   async update(
@@ -59,6 +65,7 @@ export class ApartmentController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:_id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param() param: string): Promise<any> {

@@ -10,6 +10,9 @@ import { AuthGuard } from 'src/authentication/auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/authentication/local.strategy';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/authentication/constants';
+import { JwtStrategy } from 'src/authentication/jwt.strategy';
 
 export const apartmentModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([
@@ -43,18 +46,15 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
 @Module({
   imports: [
     ...apartmentModuleMongooseModules,
-    // PassportModule,
-    // forwardRef(() => AuthenticationModule),
+    PassportModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   exports: [...apartmentModuleMongooseModules],
   controllers: [ApartmentController],
-  providers: [
-    ApartmentService,
-    // LocalStrategy,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
-  ],
+  providers: [ApartmentService, JwtStrategy],
 })
 export class ApartmentModule {}

@@ -9,9 +9,9 @@ export class CreateApartmentDTO {
   photosUrls?: ImageUpload[];
   highlights: string[];
   about: string;
-  ameneties: string[];
+  amenities: string[];
   map: Coordinates;
-  unAvailableDays: Date[];
+  unAvailableDays: string[];
   pricePerNight: number;
   rules: string[];
 }

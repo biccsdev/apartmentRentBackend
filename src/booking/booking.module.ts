@@ -12,6 +12,9 @@ import { AuthGuard } from 'src/authentication/auth.guard';
 import { LocalStrategy } from 'src/authentication/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/authentication/constants';
+import { JwtStrategy } from 'src/authentication/jwt.strategy';
 
 export const bookingModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([
@@ -45,18 +48,15 @@ export const bookingModuleMongooseModules: DynamicModule[] = [
 @Module({
   imports: [
     ...bookingModuleMongooseModules,
-    // PassportModule,
-    // forwardRef(() => AuthenticationModule),
+    PassportModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   exports: [...bookingModuleMongooseModules],
   controllers: [BookingController],
-  providers: [
-    BookingService,
-    // LocalStrategy,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
-  ],
+  providers: [BookingService, JwtStrategy],
 })
 export class BookingModule {}

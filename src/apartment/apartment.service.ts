@@ -15,7 +15,7 @@ export class ApartmentService {
     createApartmentDto: CreateApartmentDTO,
   ): Promise<ApartmentDocument> {
     const apartment = new this.apartmentModel(createApartmentDto);
-    return apartment;
+    return apartment.save();
   }
 
   async findById(_id: string): Promise<ApartmentDocument> {
