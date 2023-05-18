@@ -5,6 +5,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './user.schema';
 import { BookingModule } from 'src/booking/booking.module';
 import { Booking } from 'src/booking/booking.schema';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'src/authentication/auth.guard';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from 'src/authentication/local.strategy';
+import { AuthenticationModule } from 'src/authentication/authentication.module';
 
 export const userModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([
@@ -29,9 +34,20 @@ export const userModuleMongooseModules: DynamicModule[] = [
 ];
 
 @Module({
-  imports: [...userModuleMongooseModules],
-  exports: [...userModuleMongooseModules],
+  imports: [
+    ...userModuleMongooseModules,
+    PassportModule,
+    forwardRef(() => AuthenticationModule),
+  ],
+  exports: [...userModuleMongooseModules, UserService],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [
+    UserService,
+    LocalStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class UserModule {}

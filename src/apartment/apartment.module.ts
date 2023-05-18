@@ -1,10 +1,15 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, forwardRef } from '@nestjs/common';
 import { ApartmentController } from './apartment.controller';
 import { ApartmentService } from './apartment.service';
 import { Apartment, ApartmentSchema } from './apartment.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ImageModule } from 'src/image/image.module';
 import { ImageUpload } from 'src/image/image.schema';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'src/authentication/auth.guard';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from 'src/authentication/local.strategy';
+import { AuthenticationModule } from 'src/authentication/authentication.module';
 
 export const apartmentModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([
@@ -36,9 +41,20 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
 ];
 
 @Module({
-  imports: [...apartmentModuleMongooseModules],
+  imports: [
+    ...apartmentModuleMongooseModules,
+    PassportModule,
+    forwardRef(() => AuthenticationModule),
+  ],
   exports: [...apartmentModuleMongooseModules],
   controllers: [ApartmentController],
-  providers: [ApartmentService],
+  providers: [
+    ApartmentService,
+    LocalStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class ApartmentModule {}
