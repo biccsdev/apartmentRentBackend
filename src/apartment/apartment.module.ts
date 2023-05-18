@@ -43,18 +43,18 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
 @Module({
   imports: [
     ...apartmentModuleMongooseModules,
-    PassportModule,
-    forwardRef(() => AuthenticationModule),
+    // PassportModule,
+    // forwardRef(() => AuthenticationModule),
   ],
   exports: [...apartmentModuleMongooseModules],
   controllers: [ApartmentController],
   providers: [
     ApartmentService,
-    LocalStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // LocalStrategy,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class ApartmentModule {}

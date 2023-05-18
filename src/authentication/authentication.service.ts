@@ -30,7 +30,6 @@ export class AuthenticationService {
     if (!(await user.validatePassword(signInDto.password))) {
       throw new UnauthorizedException();
     }
-
     const payload = { email: user.email, sub: user._id };
     return {
       access_token: await this.jwtService.signAsync(payload),
@@ -39,9 +38,13 @@ export class AuthenticationService {
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userService.findOne({ email: email });
-    if (user && !(await user.validatePassword(pass))) {
+    if (user && (await user.validatePassword(pass))) {
       return user;
     }
     return null;
+  }
+
+  async findAll(): Promise<UserDocument[]> {
+    return await this.userService.findAll();
   }
 }

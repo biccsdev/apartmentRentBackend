@@ -7,6 +7,7 @@ import { BookingModule } from './booking/booking.module';
 import { ApartmentModule } from './apartment/apartment.module';
 import { ImageModule } from './image/image.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [

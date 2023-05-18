@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -11,14 +12,13 @@ import { AuthenticationService } from './authentication.service';
 import { UserDocument } from 'src/user/user.schema';
 import { CreateUserDTO } from 'src/user/createUser.dto';
 import { SignInDTO } from './signIn.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { Public } from './auth.guard';
+import { LocalAuthGuard } from './local-auth.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthenticationService) {}
 
-  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('register')
   async signUp(@Body() createUserDto: CreateUserDTO): Promise<UserDocument> {
@@ -31,13 +31,26 @@ export class AuthController {
     }
   }
 
-  @Public()
+  @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() signInDto: SignInDTO): Promise<any> {
     try {
       const user = await this.authService.signIn(signInDto);
       return user;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get()
+  async getAllRegisteredUsers(): Promise<UserDocument[]> {
+    try {
+      const users = await this.authService.findAll();
+      return users;
     } catch (error) {
       console.log(error);
       throw new BadRequestException(error);

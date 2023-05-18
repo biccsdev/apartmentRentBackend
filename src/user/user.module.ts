@@ -34,20 +34,9 @@ export const userModuleMongooseModules: DynamicModule[] = [
 ];
 
 @Module({
-  imports: [
-    ...userModuleMongooseModules,
-    PassportModule,
-    forwardRef(() => AuthenticationModule),
-  ],
+  imports: [...userModuleMongooseModules],
   exports: [...userModuleMongooseModules, UserService],
   controllers: [UserController],
-  providers: [
-    UserService,
-    LocalStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [UserService],
 })
 export class UserModule {}

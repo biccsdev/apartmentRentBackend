@@ -45,18 +45,18 @@ export const bookingModuleMongooseModules: DynamicModule[] = [
 @Module({
   imports: [
     ...bookingModuleMongooseModules,
-    PassportModule,
-    forwardRef(() => AuthenticationModule),
+    // PassportModule,
+    // forwardRef(() => AuthenticationModule),
   ],
   exports: [...bookingModuleMongooseModules],
   controllers: [BookingController],
   providers: [
     BookingService,
-    LocalStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // LocalStrategy,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class BookingModule {}

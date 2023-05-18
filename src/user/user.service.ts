@@ -22,6 +22,10 @@ export class UserService {
     return this.userModel.findById({ _id: new Types.ObjectId(id) });
   }
 
+  async findAll(): Promise<UserDocument[]> {
+    return this.userModel.find({});
+  }
+
   //Finds an user by its id, and deletes it, returns a string upon being deleted.
   async delete(id: string): Promise<string> {
     if (await this.exists(id)) {

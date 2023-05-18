@@ -8,10 +8,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    forwardRef(() => UserModule),
+    UserModule,
     PassportModule,
     JwtModule.register({
       global: true,
@@ -21,13 +22,6 @@ import { LocalStrategy } from './local.strategy';
   ],
   controllers: [AuthController],
   exports: [AuthenticationService],
-  providers: [
-    AuthenticationService,
-    LocalStrategy,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard,
-    // },
-  ],
+  providers: [AuthenticationService, LocalStrategy, JwtStrategy],
 })
 export class AuthenticationModule {}

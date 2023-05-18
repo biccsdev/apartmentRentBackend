@@ -14,8 +14,8 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
     MongooseModule.forFeature([
       { name: ImageUpload.name, schema: ImageSchema },
     ]),
-    PassportModule,
-    forwardRef(() => AuthenticationModule),
+    // PassportModule,
+    // forwardRef(() => AuthenticationModule),
   ],
   exports: [
     MongooseModule.forFeature([
@@ -25,11 +25,11 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
   controllers: [ImageController],
   providers: [
     ImageService,
-    LocalStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // LocalStrategy,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class ImageModule {}
