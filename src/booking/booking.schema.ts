@@ -10,7 +10,11 @@ export enum BOOKING_STATUS {
   ACCEPTED,
 }
 
-@Schema()
+@Schema({
+  timestamps: true,
+  toJSON: { virtuals: true, getters: false }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+  toObject: { virtuals: true, getters: false }, // So `toObject()` output includes virtuals
+})
 export class Booking {
   @Prop({ type: Types.ObjectId, ref: 'Apartment' })
   _apartment: Types.ObjectId;
@@ -23,6 +27,9 @@ export class Booking {
 
   @Prop()
   user: User;
+
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
 
   @Prop()
   arriveDate: Date;

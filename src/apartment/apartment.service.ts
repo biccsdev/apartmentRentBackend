@@ -22,6 +22,10 @@ export class ApartmentService {
     return await this.apartmentModel.findById(_id);
   }
 
+  async find(): Promise<ApartmentDocument[]> {
+    return await this.apartmentModel.find({});
+  }
+
   async update(
     _id: string,
     createApartmentDto: CreateApartmentDTO,

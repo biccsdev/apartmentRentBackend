@@ -38,9 +38,21 @@ export class ApartmentController {
   @UseGuards(JwtAuthGuard)
   @Get('/:_id')
   @HttpCode(HttpStatus.OK)
-  async find(@Param() param: string): Promise<ApartmentDocument> {
+  async findById(@Param() param: string): Promise<ApartmentDocument> {
     try {
       const apartment = await this.apartmentService.findById(param);
+      return apartment;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  @HttpCode(HttpStatus.OK)
+  async find(): Promise<ApartmentDocument[]> {
+    try {
+      const apartment = await this.apartmentService.find();
       return apartment;
     } catch (error) {
       throw new BadRequestException(error);

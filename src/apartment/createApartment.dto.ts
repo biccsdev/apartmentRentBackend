@@ -5,7 +5,7 @@ export class CreateApartmentDTO {
   _id?: string;
   title?: string;
   description?: string;
-  _thumbnail?: ImageUpload;
+  _thumbnail?: string;
   photosUrls?: ImageUpload[];
   highlights: string[];
   about: string;

@@ -53,7 +53,7 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
       signOptions: { expiresIn: '60s' },
     }),
   ],
-  exports: [...apartmentModuleMongooseModules],
+  exports: [...apartmentModuleMongooseModules, ApartmentService],
   controllers: [ApartmentController],
   providers: [ApartmentService, JwtStrategy],
 })

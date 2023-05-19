@@ -5,6 +5,4 @@ export class CreateBookingDTO {
   _user: string;
   arriveDate: Date;
   leaveDate: Date;
-  totalCost: number;
-  status: BOOKING_STATUS;
 }

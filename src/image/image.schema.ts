@@ -9,7 +9,10 @@ export class ImageUpload {
   name: string;
 
   @Prop()
-  imageUrl: string;
+  data: Buffer;
+
+  @Prop()
+  contentType: string;
 }
 
 export const ImageSchema = SchemaFactory.createForClass(ImageUpload);

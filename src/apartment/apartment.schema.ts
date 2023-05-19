@@ -21,7 +21,7 @@ export class Apartment {
   _thumbnail: Types.ObjectId;
 
   @Prop()
-  thumbnail: ImageUpload;
+  thumbnail: string;
 
   @Prop({ type: Types.ObjectId, ref: 'ImageUpload' })
   _photosUrls: Types.ObjectId[];
