@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './user.schema';
+import { ROLES, User, UserDocument } from './user.schema';
 import { FilterQuery, Model, Types } from 'mongoose';
 import { CreateUserDTO } from './createUser.dto';
 
@@ -10,6 +10,7 @@ export class UserService {
 
   async create(userDto: CreateUserDTO): Promise<UserDocument> {
     const newUser = new this.userModel(userDto);
+    newUser.role = ROLES.CLIENT;
     newUser.hash = await newUser.generatePassword(userDto.password);
     return newUser.save();
   }
