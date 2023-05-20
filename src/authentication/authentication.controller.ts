@@ -14,6 +14,7 @@ import { CreateUserDTO } from 'src/user/createUser.dto';
 import { SignInDTO } from './signIn.dto';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { AdminGuard } from './admin.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -44,7 +45,7 @@ export class AuthController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
   async getAllRegisteredUsers(): Promise<UserDocument[]> {

@@ -4,6 +4,11 @@ import { randomBytes } from 'crypto';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Booking } from 'src/booking/booking.schema';
 
+export enum ROLES {
+  CLIENT = 'CLIENT',
+  ADMIN = 'ADMIN',
+}
+
 export type UserDocument = HydratedDocument<User>;
 
 @Schema()
@@ -22,6 +27,13 @@ export class User {
 
   @Prop({ type: Types.ObjectId, ref: 'Booking' })
   _booking?: Types.ObjectId[];
+
+  @Prop({
+    type: String,
+    required: true,
+    enum: ROLES,
+  })
+  role: ROLES;
 
   // @Prop({ required: false, type: String, default: null })
   // confirmAccountToken?: string;

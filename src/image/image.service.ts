@@ -14,7 +14,7 @@ export class ImageService {
   async upload(
     apartmentName: string,
     files: Array<Express.Multer.File>,
-  ): Promise<UploadImageDTO[]> {
+  ): Promise<any> {
     const filesDto: UploadImageDTO[] = files.map((item) => {
       return {
         name: apartmentName,
@@ -22,10 +22,12 @@ export class ImageService {
         contentType: item.mimetype,
       };
     });
-    filesDto.map(async (item) => await new this.imageModel(item).save());
+    const savedImages = filesDto.map((item) => {
+      return new this.imageModel(item).save();
+    });
     // const image = { data: new Buffer.from(req.file.buffer, 'base64'), contentType: req.file.mimetype }
     // const savedImage = await ImageModel.create(image);
-    return filesDto;
+    return savedImages;
   }
 
   async find(name: string): Promise<any> {

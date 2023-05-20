@@ -21,6 +21,7 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
     MongooseModule.forFeature([
       { name: ImageUpload.name, schema: ImageSchema },
     ]),
+    ImageService,
   ],
   controllers: [ImageController],
   providers: [

@@ -1,13 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Apartment } from 'src/apartment/apartment.schema';
+import { ImageUpload } from 'src/image/image.schema';
 import { User } from 'src/user/user.schema';
 
 export type BookingDocument = HydratedDocument<Booking>;
 
 export enum BOOKING_STATUS {
-  PENDING,
-  ACCEPTED,
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  DENIED = 'DENIED',
 }
 
 @Schema({
@@ -39,6 +41,9 @@ export class Booking {
 
   @Prop()
   totalCost: number;
+
+  @Prop()
+  paymentProof?: ImageUpload;
 
   @Prop({
     type: String,

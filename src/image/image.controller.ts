@@ -6,22 +6,20 @@ import {
   Header,
   Param,
   Post,
-  Res,
-  StreamableFile,
-  UploadedFile,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { ImageService } from './image.service';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { createReadStream } from 'fs';
-import { join } from 'path';
-import { UploadImageDTO } from './uploadImage.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
+import { AdminGuard } from 'src/authentication/admin.guard';
 
 @Controller('image')
 export class ImageController {
   constructor(private imageService: ImageService) {}
 
+  @UseGuards(AdminGuard)
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
@@ -40,6 +38,7 @@ export class ImageController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:name')
   @Header('Content-Type', 'application/json')
   @Header('Content-Disposition', 'attachment; filename="package.json"')

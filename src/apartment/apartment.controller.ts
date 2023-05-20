@@ -15,12 +15,13 @@ import { ApartmentService } from './apartment.service';
 import { ApartmentDocument } from './apartment.schema';
 import { CreateApartmentDTO } from './createApartment.dto';
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
+import { AdminGuard } from 'src/authentication/admin.guard';
 
 @Controller('apartment')
 export class ApartmentController {
   constructor(private apartmentService: ApartmentService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @Post()
   @HttpCode(HttpStatus.OK)
   async create(
@@ -59,7 +60,7 @@ export class ApartmentController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @Patch('/:_id')
   @HttpCode(HttpStatus.OK)
   async update(
@@ -77,7 +78,7 @@ export class ApartmentController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AdminGuard)
   @Delete('/:_id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param() param: string): Promise<any> {
