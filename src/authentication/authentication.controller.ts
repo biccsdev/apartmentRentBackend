@@ -9,12 +9,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { UserDocument } from 'src/user/user.schema';
+import { ROLES, UserDocument } from 'src/user/user.schema';
 import { CreateUserDTO } from 'src/user/createUser.dto';
 import { SignInDTO } from './signIn.dto';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AdminGuard } from './admin.guard';
+import { Roles } from './roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -45,9 +46,10 @@ export class AuthController {
     }
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(LocalAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
+  @Roles(ROLES.ADMIN)
   async getAllRegisteredUsers(): Promise<UserDocument[]> {
     try {
       const users = await this.authService.findAll();

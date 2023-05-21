@@ -1,21 +1,24 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Observable } from 'rxjs';
 import { ROLES } from 'src/user/user.schema';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<ROLES[]>('roles', context.getHandler());
-
-    if (!roles || !roles.includes(ROLES.ADMIN)) {
-      return true; // Allow access if no roles are specified or if the ADMIN role is not required
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    if (!roles) {
+      return true;
     }
-
     const request = context.switchToHttp().getRequest();
-    const user = request.user; // Assuming the user object is available in the request
+    console.log(request.user);
+    const user = request.user;
+    return this.matchRoles(roles[0], user.role);
+  }
 
-    return user && user.role === ROLES.ADMIN;
+  matchRoles(role, userRole): boolean {
+    return role == userRole;
   }
 }
