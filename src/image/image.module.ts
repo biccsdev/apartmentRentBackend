@@ -8,6 +8,7 @@ import { AuthGuard } from 'src/authentication/auth.guard';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/authentication/local.strategy';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [

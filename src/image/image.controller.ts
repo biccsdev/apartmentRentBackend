@@ -14,13 +14,16 @@ import { ImageService } from './image.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { AdminGuard } from 'src/authentication/admin.guard';
+import { Roles } from 'src/authentication/roles.decorator';
+import { ROLES } from 'src/user/user.schema';
 
 @Controller('image')
 export class ImageController {
   constructor(private imageService: ImageService) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Post('upload')
+  @Roles(ROLES.ADMIN)
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
     @UploadedFiles() files: Array<Express.Multer.File>,

@@ -16,13 +16,16 @@ import { ApartmentDocument } from './apartment.schema';
 import { CreateApartmentDTO } from './createApartment.dto';
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { AdminGuard } from 'src/authentication/admin.guard';
+import { Roles } from 'src/authentication/roles.decorator';
+import { ROLES } from 'src/user/user.schema';
 
 @Controller('apartment')
 export class ApartmentController {
   constructor(private apartmentService: ApartmentService) {}
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Post()
+  @Roles(ROLES.ADMIN)
   @HttpCode(HttpStatus.OK)
   async create(
     @Body()
@@ -60,8 +63,9 @@ export class ApartmentController {
     }
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Patch('/:_id')
+  @Roles(ROLES.ADMIN)
   @HttpCode(HttpStatus.OK)
   async update(
     @Param() param: string,
@@ -78,8 +82,9 @@ export class ApartmentController {
     }
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Delete('/:_id')
+  @Roles(ROLES.ADMIN)
   @HttpCode(HttpStatus.OK)
   async delete(@Param() param: string): Promise<any> {
     try {

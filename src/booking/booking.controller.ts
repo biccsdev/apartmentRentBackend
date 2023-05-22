@@ -19,6 +19,8 @@ import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { CreateBookingDTO } from './createBooking.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from 'src/authentication/admin.guard';
+import { Roles } from 'src/authentication/roles.decorator';
+import { ROLES } from 'src/user/user.schema';
 
 @Controller('booking')
 export class BookingController {
@@ -96,9 +98,10 @@ export class BookingController {
   //   }
   // }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Patch('/review/:_id')
+  @Roles(ROLES.ADMIN)
   async review(
     @Param() param: string,
     @Body() updatedStatus: BOOKING_STATUS,

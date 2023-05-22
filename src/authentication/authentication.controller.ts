@@ -46,7 +46,7 @@ export class AuthController {
     }
   }
 
-  @UseGuards(LocalAuthGuard, AdminGuard)
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
   @Roles(ROLES.ADMIN)

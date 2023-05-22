@@ -13,6 +13,7 @@ import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/authentication/constants';
 import { JwtStrategy } from 'src/authentication/jwt.strategy';
+import { UserModule } from 'src/user/user.module';
 
 export const apartmentModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([
@@ -47,6 +48,7 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
   imports: [
     ...apartmentModuleMongooseModules,
     PassportModule,
+    forwardRef(() => UserModule),
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
