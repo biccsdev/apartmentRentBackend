@@ -6,6 +6,7 @@ import {
   Header,
   Param,
   Post,
+  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -27,14 +28,29 @@ export class ImageController {
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() apartmentName: any,
+    @Body() _apartment: string,
   ) {
     try {
-      const fileUploaded = await this.imageService.upload(
-        apartmentName.apartmentName,
+      const fileUploaded = await this.imageService.upload(_apartment, files);
+      return 'Successfully uploaded all your files.';
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('payment')
+  async uploadPaymentFile(
+    @UploadedFile() files: Express.Multer.File,
+    @Body() _booking: string,
+  ) {
+    try {
+      const fileUploaded = await this.imageService.uploadPayment(
+        _booking,
         files,
       );
-      return 'Successfully uploaded all your files.';
+      return 'Successfully uploaded you payment file.';
     } catch (error) {
       console.log(error);
       throw new BadRequestException(error);

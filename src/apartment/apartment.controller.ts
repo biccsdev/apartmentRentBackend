@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { AdminGuard } from 'src/authentication/admin.guard';
 import { Roles } from 'src/authentication/roles.decorator';
 import { ROLES } from 'src/user/user.schema';
+import { ImageService } from 'src/image/image.service';
 
 @Controller('apartment')
 export class ApartmentController {

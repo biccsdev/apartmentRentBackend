@@ -9,6 +9,7 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from 'src/authentication/local.strategy';
 import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { UserModule } from 'src/user/user.module';
+import { ApartmentModule } from 'src/apartment/apartment.module';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UserModule } from 'src/user/user.module';
       { name: ImageUpload.name, schema: ImageSchema },
     ]),
     // PassportModule,
-    // forwardRef(() => AuthenticationModule),
+    forwardRef(() => ApartmentModule),
   ],
   exports: [
     MongooseModule.forFeature([
