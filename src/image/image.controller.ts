@@ -28,10 +28,10 @@ export class ImageController {
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() _apartment: string,
+    @Body() apartment: any,
   ) {
     try {
-      const fileUploaded = await this.imageService.upload(_apartment, files);
+      const fileUploaded = await this.imageService.upload(apartment._id, files);
       return 'Successfully uploaded all your files.';
     } catch (error) {
       console.log(error);
@@ -41,14 +41,15 @@ export class ImageController {
 
   @UseGuards(JwtAuthGuard)
   @Post('payment')
+  @UseInterceptors(FilesInterceptor('files'))
   async uploadPaymentFile(
-    @UploadedFile() files: Express.Multer.File,
-    @Body() _booking: string,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() _booking: any,
   ) {
     try {
       const fileUploaded = await this.imageService.uploadPayment(
-        _booking,
-        files,
+        _booking._id,
+        files[0],
       );
       return 'Successfully uploaded you payment file.';
     } catch (error) {
@@ -58,12 +59,12 @@ export class ImageController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/:name')
+  @Get('/:_id')
   @Header('Content-Type', 'application/json')
   @Header('Content-Disposition', 'attachment; filename="package.json"')
   async getStaticFile(@Param() param: any): Promise<any> {
     try {
-      const file = await this.imageService.find(param.name);
+      const file = await this.imageService.find(param._id);
       return file;
     } catch (error) {
       console.log(error);

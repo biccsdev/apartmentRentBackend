@@ -59,7 +59,7 @@ export class BookingService {
     const ap = await this.apartmentService.findById(
       createBookingDto._apartment,
     );
-    const im = await this.imageService.upload(`pago${ap.title}`, files);
+    const im = await this.imageService.upload(ap._id.toString(), files);
     if (!ap) {
       throw new BadRequestException('Apartment doesnt exists.');
     }
@@ -74,7 +74,16 @@ export class BookingService {
 
     const totalDays = getDatesBetween(booking.arriveDate, booking.leaveDate);
 
-    totalDays.map((item) => ap.unAvailableDays.push(item));
+    totalDays.map((item) => {
+      for (let i = 0; i < ap.unAvailableDays.length; i++) {
+        const element = ap.unAvailableDays[i];
+        if (element.getTime() === item.getTime()) {
+          console.log('im in');
+          throw new BadRequestException('Choose another date');
+        }
+      }
+      ap.unAvailableDays.push(item);
+    });
     ap.save();
 
     const timeDiff = Math.abs(
@@ -87,9 +96,7 @@ export class BookingService {
     sendSMS(
       us.phoneNumber.toString(),
       'Vonage APIs',
-      `Se ha creado su reservacion exitosamente! \n
-      El encargado revisara su comprobante de pago y verificacion. \n
-      Una vez verificada su reservacion le llegara un nuevo mensaje de texto con la clave de la caja de llaves del departamento. \n`,
+      `Se ha creado su reservacion exitosamente! \nEl encargado revisara su comprobante de pago y verificacion. \nUna vez verificada su reservacion le llegara un nuevo mensaje de texto con la clave de la caja de llaves del departamento. \n`,
     );
     sendSMS(
       admin.phoneNumber.toString(),
@@ -108,7 +115,22 @@ export class BookingService {
     id: string,
     createBookingDto: CreateBookingDTO,
   ): Promise<BookingDocument> {
-    return await this.bookingModel.findByIdAndUpdate(id, createBookingDto);
+    let filter: any = createBookingDto;
+    if (createBookingDto.arriveDate && createBookingDto.leaveDate) {
+      filter = {
+        arriveDate: new Date(createBookingDto.arriveDate),
+        leaveDate: new Date(createBookingDto.leaveDate),
+      };
+    } else if (createBookingDto.arriveDate) {
+      filter = {
+        arriveDate: new Date(createBookingDto.arriveDate),
+      };
+    } else if (createBookingDto.leaveDate) {
+      filter = {
+        leaveDate: new Date(createBookingDto.leaveDate),
+      };
+    }
+    return await this.bookingModel.findByIdAndUpdate(id, filter);
   }
   async delete(id: string): Promise<any> {
     return await this.bookingModel.deleteOne({ _id: id });
@@ -129,7 +151,7 @@ export class BookingService {
       totalDays.map((item) => {
         for (let i = 0; i < ap.unAvailableDays.length; i++) {
           const element = ap.unAvailableDays[i];
-          if (item == element) {
+          if (item.getTime() === element.getTime()) {
             ap.unAvailableDays.splice(i, 1);
           }
         }

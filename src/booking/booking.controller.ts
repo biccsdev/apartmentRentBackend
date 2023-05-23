@@ -104,10 +104,13 @@ export class BookingController {
   @Roles(ROLES.ADMIN)
   async review(
     @Param() param: string,
-    @Body() updatedStatus: BOOKING_STATUS,
+    @Body() updatedStatus: any,
   ): Promise<any> {
     try {
-      const booking = await this.bookingService.review(param, updatedStatus);
+      const booking = await this.bookingService.review(
+        param,
+        updatedStatus.updatedStatus,
+      );
       return booking;
     } catch (error) {
       console.log(error);

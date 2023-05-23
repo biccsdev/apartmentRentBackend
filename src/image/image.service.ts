@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { UploadImageDTO } from './uploadImage.dto';
 import { createReadStream } from 'fs';
 import { ApartmentService } from 'src/apartment/apartment.service';
+import { CreateApartmentDTO } from 'src/apartment/createApartment.dto';
 
 @Injectable()
 export class ImageService {
@@ -25,12 +26,16 @@ export class ImageService {
         contentType: item.mimetype,
       };
     });
+    let aps = [];
     for (let i = 0; i < filesDto.length; i++) {
       const element = filesDto[i];
       const image = new this.imageModel(element);
       apartment.photosUrls.push(image);
+      aps.push(image._id.toString());
       image.save();
     }
+    const dto: CreateApartmentDTO = { _photosUrls: aps };
+    await this.apartmentService.update(apartment._id.toString(), dto);
     // const savedImages = filesDto.map((item) => {
     //   return new this.imageModel(item).save();
     // });
@@ -47,8 +52,8 @@ export class ImageService {
     }).save();
   }
 
-  async find(name: string): Promise<any> {
-    const images = await this.imageModel.find({ name: name });
+  async find(_id: string): Promise<any> {
+    const images = await this.imageModel.findById(_id);
     // console.log(images);
     // const readStreamArr = images.map(
     //   (item) => new StreamableFile(createReadStream(item.data)),

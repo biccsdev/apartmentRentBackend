@@ -6,12 +6,14 @@ export class CreateApartmentDTO {
   title?: string;
   description?: string;
   _thumbnail?: string;
-  photosUrls?: ImageUpload[];
-  highlights: string[];
-  about: string;
-  amenities: string[];
-  map: Coordinates;
-  unAvailableDays: string[];
-  pricePerNight: number;
-  rules: string[];
+  _photosUrls?: string[];
+  highlights?: string[];
+  about?: string;
+  keyBoxPassword?: string;
+  location?: string;
+  amenities?: string[];
+  map?: Coordinates;
+  unAvailableDays?: string[];
+  pricePerNight?: number;
+  rules?: string[];
 }

@@ -39,6 +39,9 @@ export class Apartment {
   keyBoxPassword?: string;
 
   @Prop()
+  location?: string;
+
+  @Prop()
   amenities: string[];
 
   @Prop()
