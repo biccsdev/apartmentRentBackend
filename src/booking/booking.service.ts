@@ -50,7 +50,6 @@ export class BookingService {
     private imageService: ImageService,
   ) {}
 
-  //add api call to send messsage to owner to make him aware of new booking
   async create(
     files: Array<Express.Multer.File>,
     createBookingDto: CreateBookingDTO,
