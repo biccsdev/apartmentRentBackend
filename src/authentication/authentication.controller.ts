@@ -59,4 +59,17 @@ export class AuthController {
       throw new BadRequestException(error);
     }
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @HttpCode(HttpStatus.OK)
+  // @Get('/:_id')
+  // async getUserRole(): Promise<UserDocument[]> {
+  //   try {
+  //     const users = await this.authService.findAll();
+  //     return users;
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new BadRequestException(error);
+  //   }
+  // }
 }
