@@ -52,7 +52,7 @@ export class BookingService {
 
   async create(
     files: Array<Express.Multer.File>,
-    createBookingDto: CreateBookingDTO,
+    createBookingDto: any,
   ): Promise<BookingDocument> {
     const admin = await this.userService.findOne({ role: ROLES.ADMIN });
     const ap = await this.apartmentService.findById(

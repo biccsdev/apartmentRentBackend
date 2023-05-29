@@ -9,6 +9,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -32,10 +33,13 @@ export class BookingController {
   @UseInterceptors(FilesInterceptor('files'))
   async create(
     @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() createBookingDto: CreateBookingDTO,
+    @Body() createBookingDto: any,
   ): Promise<BookingDocument> {
     try {
-      const booking = await this.bookingService.create(files, createBookingDto);
+      const booking = await this.bookingService.create(
+        files,
+        JSON.parse(createBookingDto.createBookingDto),
+      );
       return booking;
     } catch (error) {
       console.log(error);
@@ -46,9 +50,14 @@ export class BookingController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get()
-  async find(@Body() body: {}): Promise<BookingDocument[]> {
+  async find(@Query('userId') userId: string): Promise<BookingDocument[]> {
     try {
-      const booking = await this.bookingService.find(body);
+      var booking = null;
+      if (!userId) {
+        booking = await this.bookingService.find({});
+        return booking;
+      }
+      booking = await this.bookingService.find({ _user: userId });
       return booking;
     } catch (error) {
       console.log(error);
@@ -109,7 +118,7 @@ export class BookingController {
     try {
       const booking = await this.bookingService.review(
         param,
-        updatedStatus.updatedStatus,
+        updatedStatus.status,
       );
       return booking;
     } catch (error) {
