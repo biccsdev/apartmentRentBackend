@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { BadRequestException, HttpStatus } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { ApartmentController } from './apartment.controller';
 import { ApartmentService } from './apartment.service';
 import { CreateApartmentDTO } from './createApartment.dto';
@@ -55,14 +55,6 @@ describe('ApartmentController', () => {
         pricePerNight: 2500,
         rules: ['check-in 12:00pm', 'check-out 3:00pm'],
         __v: 0,
-        // _photosUrls: [
-        //   '646c33d16cdaef2e84aa6ff1',
-        //   '646c33d16cdaef2e84aa6ff2',
-        //   '646c33d16cdaef2e84aa6ff3',
-        //   '646c33d16cdaef2e84aa6ff4',
-        //   '646c33d16cdaef2e84aa6ff5',
-        //   '646c33d16cdaef2e84aa6ff6',
-        //   '646c33d16cdaef2e84aa6ff7',
         // ],
       }; // Mock the created apartment data
 
@@ -75,9 +67,7 @@ describe('ApartmentController', () => {
     });
 
     it('should throw BadRequestException if an error occurs during creation', async () => {
-      const createApartmentDto: CreateApartmentDTO = {
-        // Provide the necessary data for creating an apartment
-      };
+      const createApartmentDto: CreateApartmentDTO = {};
 
       const error = new Error('Some error');
 
@@ -110,15 +100,6 @@ describe('ApartmentController', () => {
         pricePerNight: 2500,
         rules: ['check-in 12:00pm', 'check-out 3:00pm'],
         __v: 0,
-        // _photosUrls: [
-        //   '646c33d16cdaef2e84aa6ff1',
-        //   '646c33d16cdaef2e84aa6ff2',
-        //   '646c33d16cdaef2e84aa6ff3',
-        //   '646c33d16cdaef2e84aa6ff4',
-        //   '646c33d16cdaef2e84aa6ff5',
-        //   '646c33d16cdaef2e84aa6ff6',
-        //   '646c33d16cdaef2e84aa6ff7',
-        // ],
       }; // Mock the found apartment data
 
       jest
@@ -162,15 +143,6 @@ describe('ApartmentController', () => {
           pricePerNight: 2500,
           rules: ['check-in 12:00pm', 'check-out 3:00pm'],
           __v: 0,
-          // _photosUrls: [
-          //   '646c33d16cdaef2e84aa6ff1',
-          //   '646c33d16cdaef2e84aa6ff2',
-          //   '646c33d16cdaef2e84aa6ff3',
-          //   '646c33d16cdaef2e84aa6ff4',
-          //   '646c33d16cdaef2e84aa6ff5',
-          //   '646c33d16cdaef2e84aa6ff6',
-          //   '646c33d16cdaef2e84aa6ff7',
-          // ],
         },
       ]; // Mock the array of apartments
 
@@ -215,15 +187,6 @@ describe('ApartmentController', () => {
         pricePerNight: 2500,
         rules: ['check-in 12:00pm', 'check-out 3:00pm'],
         __v: 0,
-        // _photosUrls: [
-        //   '646c33d16cdaef2e84aa6ff1',
-        //   '646c33d16cdaef2e84aa6ff2',
-        //   '646c33d16cdaef2e84aa6ff3',
-        //   '646c33d16cdaef2e84aa6ff4',
-        //   '646c33d16cdaef2e84aa6ff5',
-        //   '646c33d16cdaef2e84aa6ff6',
-        //   '646c33d16cdaef2e84aa6ff7',
-        // ],
       }; // Mock the updated apartment data
 
       jest
@@ -273,15 +236,6 @@ describe('ApartmentController', () => {
         pricePerNight: 2500,
         rules: ['check-in 12:00pm', 'check-out 3:00pm'],
         __v: 0,
-        // _photosUrls: [
-        //   '646c33d16cdaef2e84aa6ff1',
-        //   '646c33d16cdaef2e84aa6ff2',
-        //   '646c33d16cdaef2e84aa6ff3',
-        //   '646c33d16cdaef2e84aa6ff4',
-        //   '646c33d16cdaef2e84aa6ff5',
-        //   '646c33d16cdaef2e84aa6ff6',
-        //   '646c33d16cdaef2e84aa6ff7',
-        // ],
       }; // Mock the deleted apartment data
 
       jest

@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Apartment } from 'src/apartment/apartment.schema';
-import { ImageUpload } from 'src/image/image.schema';
 import { User } from 'src/user/user.schema';
 
 export type BookingDocument = HydratedDocument<Booking>;
@@ -43,7 +42,7 @@ export class Booking {
   totalCost: number;
 
   @Prop()
-  paymentProof?: ImageUpload;
+  paymentProof?: string;
 
   @Prop({
     type: String,

@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BOOKING_STATUS, Booking, BookingDocument } from './booking.schema';
 import { Model } from 'mongoose';
-import { CreateApartmentDTO } from 'src/apartment/createApartment.dto';
 import { CreateBookingDTO } from './createBooking.dto';
 import { ApartmentService } from 'src/apartment/apartment.service';
 import { UserService } from 'src/user/user.service';
@@ -41,6 +40,17 @@ function getDatesBetween(startDate: Date, endDate: Date): Date[] {
   return dates;
 }
 
+function getNights(startDate: Date, endDate: Date): Date[] {
+  const dates: Date[] = [];
+  let currentDate = new Date(startDate);
+
+  while (currentDate < endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  return dates;
+}
+
 @Injectable()
 export class BookingService {
   constructor(
@@ -65,19 +75,18 @@ export class BookingService {
     const us = await this.userService.findById(createBookingDto._user);
 
     const booking = new this.bookingModel(createBookingDto);
-    booking.paymentProof = im[0]._id;
+    booking.paymentProof = im._id.toString();
     booking.apartment = ap;
     booking.user = us;
     booking.leaveDate = new Date(createBookingDto.leaveDate);
     booking.arriveDate = new Date(createBookingDto.arriveDate);
 
-    const totalDays = getDatesBetween(booking.arriveDate, booking.leaveDate);
+    const totalDays = getNights(booking.arriveDate, booking.leaveDate);
 
     totalDays.map((item) => {
       for (let i = 0; i < ap.unAvailableDays.length; i++) {
         const element = ap.unAvailableDays[i];
         if (element.getTime() === item.getTime()) {
-          console.log('im in');
           throw new BadRequestException('Choose another date');
         }
       }
@@ -135,7 +144,6 @@ export class BookingService {
     return await this.bookingModel.deleteOne({ _id: id });
   }
 
-  //implement msg api to alert the user their booking was accepted/denied via text msg
   async review(
     id: string,
     updatedStatus: BOOKING_STATUS,

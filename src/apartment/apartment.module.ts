@@ -5,11 +5,7 @@ import { Apartment, ApartmentSchema } from './apartment.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ImageModule } from 'src/image/image.module';
 import { ImageUpload } from 'src/image/image.schema';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'src/authentication/auth.guard';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from 'src/authentication/local.strategy';
-import { AuthenticationModule } from 'src/authentication/authentication.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/authentication/constants';
 import { JwtStrategy } from 'src/authentication/jwt.strategy';
@@ -52,7 +48,7 @@ export const apartmentModuleMongooseModules: DynamicModule[] = [
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   exports: [...apartmentModuleMongooseModules, ApartmentService],

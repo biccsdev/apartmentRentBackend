@@ -5,11 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './user.schema';
 import { BookingModule } from 'src/booking/booking.module';
 import { Booking } from 'src/booking/booking.schema';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'src/authentication/auth.guard';
-import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from 'src/authentication/local.strategy';
-import { AuthenticationModule } from 'src/authentication/authentication.module';
 
 export const userModuleMongooseModules: DynamicModule[] = [
   MongooseModule.forFeatureAsync([

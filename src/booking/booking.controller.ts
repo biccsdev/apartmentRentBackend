@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -15,7 +14,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
-import { BOOKING_STATUS, BookingDocument } from './booking.schema';
+import { BookingDocument } from './booking.schema';
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
 import { CreateBookingDTO } from './createBooking.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -93,19 +92,6 @@ export class BookingController {
       throw new BadRequestException(error);
     }
   }
-
-  // @UseGuards(JwtAuthGuard)
-  // @HttpCode(HttpStatus.OK)
-  // @Delete(':_id')
-  // async delete(@Param() param: string): Promise<any> {
-  //   try {
-  //     const booking = await this.bookingService.delete(param);
-  //     return booking;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw new BadRequestException(error);
-  //   }
-  // }
 
   @UseGuards(JwtAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)

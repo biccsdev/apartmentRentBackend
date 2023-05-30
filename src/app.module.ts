@@ -7,13 +7,11 @@ import { BookingModule } from './booking/booking.module';
 import { ApartmentModule } from './apartment/apartment.module';
 import { ImageModule } from './image/image.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PassportModule } from '@nestjs/passport';
+require('dotenv').config();
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://biccs:Kondas123@cluster0.ihoyt.mongodb.net/Apartments?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.DB_URI),
     AuthenticationModule,
     UserModule,
     BookingModule,

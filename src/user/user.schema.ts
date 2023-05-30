@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { hash, compare } from 'bcrypt';
 import { randomBytes } from 'crypto';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
-import { Booking } from 'src/booking/booking.schema';
+import { HydratedDocument, Types } from 'mongoose';
 
 export enum ROLES {
   CLIENT = 'CLIENT',
@@ -34,12 +33,6 @@ export class User {
     enum: ROLES,
   })
   role: ROLES;
-
-  // @Prop({ required: false, type: String, default: null })
-  // confirmAccountToken?: string;
-
-  // @Prop()
-  // booking: Booking[];
 
   generatePassword?: IGeneratePasswordFunction;
   generateConfirmAccountToken?: IGenerateConfirmAccountTokenFunction;

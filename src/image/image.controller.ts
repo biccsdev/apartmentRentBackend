@@ -6,7 +6,6 @@ import {
   Header,
   Param,
   Post,
-  UploadedFile,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
