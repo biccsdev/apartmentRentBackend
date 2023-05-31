@@ -17,6 +17,9 @@ export class Review {
   @Prop()
   user: User;
 
+  @Prop()
+  creator?: string;
+
   @Prop({ type: Types.ObjectId, ref: 'Apartment' })
   _apartment: Types.ObjectId;
 
