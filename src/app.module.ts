@@ -7,6 +7,7 @@ import { BookingModule } from './booking/booking.module';
 import { ApartmentModule } from './apartment/apartment.module';
 import { ImageModule } from './image/image.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ReviewModule } from './review/review.module';
 require('dotenv').config();
 
 @Module({
@@ -17,6 +18,7 @@ require('dotenv').config();
     BookingModule,
     ApartmentModule,
     ImageModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
