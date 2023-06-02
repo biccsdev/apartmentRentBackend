@@ -21,6 +21,12 @@ export class AuthenticationService {
     if (createUserDto.password !== createUserDto.repeatPassword) {
       throw new BadRequestException("Passwords don't match.");
     }
+    const allUsers = await this.userService.findAll();
+    allUsers.map((item) => {
+      if (item.email === createUserDto.email) {
+        throw new BadRequestException('Email is already in use.');
+      }
+    });
     const user = await this.userService.create(createUserDto);
     return user;
   }
