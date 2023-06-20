@@ -22,8 +22,17 @@ export class ApartmentService {
     return await this.apartmentModel.findById(_id);
   }
 
-  async find(): Promise<ApartmentDocument[]> {
-    return await this.apartmentModel.find({});
+  async findUnlocked(param: {}): Promise<ApartmentDocument[]> {
+    const res = await this.apartmentModel
+      .find(param)
+      .select(
+        'title description highlights about location amenities map unAvailableDays pricePerNight rules',
+      );
+    return res;
+  }
+
+  async find(param: {}): Promise<ApartmentDocument[]> {
+    return await this.apartmentModel.find(param);
   }
 
   async update(

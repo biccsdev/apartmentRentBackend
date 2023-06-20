@@ -36,7 +36,6 @@ export class ReviewController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Get('/apartment/:_id')
   async findByApartment(@Param() param: any): Promise<ReviewDocument[]> {

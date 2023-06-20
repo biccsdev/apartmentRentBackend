@@ -23,6 +23,17 @@ import { ROLES } from 'src/user/user.schema';
 export class ApartmentController {
   constructor(private apartmentService: ApartmentService) {}
 
+  @Get('/unlocked')
+  @HttpCode(HttpStatus.OK)
+  async findUnlocked(): Promise<ApartmentDocument[]> {
+    try {
+      const apartment = await this.apartmentService.findUnlocked({});
+      return apartment;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
   @UseGuards(JwtAuthGuard, AdminGuard)
   @Post()
   @Roles(ROLES.ADMIN)
@@ -56,7 +67,7 @@ export class ApartmentController {
   @HttpCode(HttpStatus.OK)
   async find(): Promise<ApartmentDocument[]> {
     try {
-      const apartment = await this.apartmentService.find();
+      const apartment = await this.apartmentService.find({});
       return apartment;
     } catch (error) {
       throw new BadRequestException(error);
