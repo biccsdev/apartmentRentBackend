@@ -104,6 +104,7 @@ export class BookingController {
     try {
       const booking = await this.bookingService.review(
         param,
+        updatedStatus._adminId,
         updatedStatus.status,
       );
       return booking;

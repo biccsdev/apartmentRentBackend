@@ -44,6 +44,9 @@ export class Booking {
   @Prop()
   paymentProof?: string;
 
+  @Prop()
+  adminReviewed?: string;
+
   @Prop({
     type: String,
     required: true,

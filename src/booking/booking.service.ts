@@ -146,10 +146,13 @@ export class BookingService {
 
   async review(
     id: string,
+    adminId: string,
     updatedStatus: BOOKING_STATUS,
   ): Promise<BookingDocument> {
     const booking = await this.findById(id);
     booking.status = updatedStatus;
+    const admn = await this.userService.findById(adminId);
+    booking.adminReviewed = admn.name;
     if (updatedStatus == BOOKING_STATUS.DENIED) {
       const totalDays = getDatesBetween(booking.arriveDate, booking.leaveDate);
       const ap = await this.apartmentService.findById(
