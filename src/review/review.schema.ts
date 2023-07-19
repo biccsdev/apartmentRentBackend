@@ -29,6 +29,12 @@ export class Review {
   @Prop()
   comment: string;
 
+  @Prop()
+  likes: number;
+
+  @Prop()
+  likedBy?: Types.ObjectId[];
+
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 }

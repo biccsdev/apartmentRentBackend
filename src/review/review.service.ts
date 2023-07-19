@@ -11,10 +11,10 @@ export class ReviewService {
   ) {}
 
   async create(createReviewDto: CreateReviewDTO): Promise<ReviewDocument> {
-    console.log(createReviewDto);
     const review = new this.reviewModel(createReviewDto);
     const creator = await this.userService.findById(createReviewDto._user);
     review.creator = creator.name;
+    review.likes = 0;
     return review.save();
   }
 
@@ -22,8 +22,8 @@ export class ReviewService {
     return await this.reviewModel.find(params);
   }
 
-  async update(id: string, comment: string): Promise<ReviewDocument> {
-    return await this.reviewModel.findByIdAndUpdate(id, { comment: comment });
+  async update(id: string, param: {}): Promise<ReviewDocument> {
+    return await this.reviewModel.findByIdAndUpdate(id, param);
   }
 
   async delete(id: string): Promise<any> {

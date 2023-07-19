@@ -44,7 +44,7 @@ function getNights(startDate: Date, endDate: Date): Date[] {
   const dates: Date[] = [];
   let currentDate = new Date(startDate);
 
-  while (currentDate < endDate) {
+  while (currentDate <= endDate) {
     dates.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
@@ -173,12 +173,73 @@ export class BookingService {
       const ap = await this.apartmentService.findById(
         booking._apartment.toString(),
       );
+      let location = '';
+      switch (ap.location) {
+        case 'MazatlanA':
+          location =
+            'https://goo.gl/maps/RPTWzFPets1jGm4N6?coh=178573&entry=tt';
+          break;
+        case 'MazatlanB':
+          location = 'https://goo.gl/maps/8wWh3mET5v2VrFQs8';
+          break;
+        case 'LosCabosA':
+          location =
+            'https://goo.gl/maps/oQe5o7gwyLU4ySgQA?coh=178573&entry=tt';
+          break;
+        case 'LosCabosB':
+          location = 'https://goo.gl/maps/dVRk9dpJzn3C8uXP9';
+          break;
+      }
+      let visualReference = '';
+      switch (ap.location) {
+        case 'MazatlanA':
+          visualReference =
+            'Torre BNI Condos, porton negro, tiene al lado izquierdo una tienda Kiosko';
+          break;
+        case 'MazatlanB':
+          visualReference =
+            'Departamentos De La Ostra, contra esquina de Iglesia';
+          break;
+        case 'LosCabosA':
+          visualReference = 'Edificio gris con negro';
+          break;
+        case 'LosCabosB':
+          visualReference = 'Edificio Blanco';
+          break;
+      }
+      let apartmentEntry = '';
+      switch (ap.location) {
+        case 'MazatlanA':
+          apartmentEntry =
+            'Espera a que el guardia te abra el porton, dirigete al elevador y digita el ultimo piso antes de la terraza, veras el departamento a mano izquierda. Ahora solo digita tu clave secreta en la caja de llaves, ingresa al departamento y cierra la caja de llaves despues de utilizarla, recuerda remover el codigo secreto una vez puesto.';
+          break;
+        case 'MazatlanB':
+          apartmentEntry =
+            'Sube las escaleras hasta el ultimo piso, veras el departamento a mano izquierda. Ahora solo digita tu clave secreta en la caja de llaves, ingresa al departamento y cierra la caja de llaves despues de utilizarla, recuerda remover el codigo secreto una vez puesto.';
+          break;
+        case 'LosCabosA':
+          apartmentEntry = '[ Pendiente ]';
+          break;
+        case 'LosCabosB':
+          apartmentEntry = '[ Pendiente ]';
+          break;
+      }
       sendSMS(
         us.phoneNumber.toString(),
         'Vonage APIs',
-        `Se ha confirmado el pago de su estancia en ${ap.title} exitosamente! \n
+        `Hola ${us.name}, Gracias por reservar ${ap.title}! \n
+        Se ha confirmado el pago de su reservación exitosamente! \n
+        Recuerda que el Check-in es a las 3:00pm y el Check-out a las 12:00pm. \n
         Clave de la caja de llaves: ${ap.keyBoxPassword} \n
-        Recuerda que el Check-in es a las 3:00pm y el Check-out a las 12:00pm.`,
+        Link de Google Maps: ${location} \n
+        Referencia visual: ${visualReference} \n
+        Entrada al departamento: ${apartmentEntry} \n
+        INFORMACION IMPORTANTE \n
+        Siempre traer contigo las llaves ya que el departamento no se puede abrir sin llave o puedes resguardarlas en el lockbox para evitar que se extravien. \n
+        LOS DATOS QUE SE PROPORCIONAN SON PRIVADOS \n
+        En caso de cualquier situacion favor de comunicarse al 6681333889 \n
+        \n
+        Bienvenidos!!\n`,
       );
     }
     return booking.save();

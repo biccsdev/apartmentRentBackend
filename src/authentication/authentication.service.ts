@@ -23,16 +23,29 @@ export class AuthenticationService {
     }
     const allUsers = await this.userService.findAll();
     allUsers.map((item) => {
-      if (item.email === createUserDto.email) {
+      if (item.email === createUserDto.email.toLowerCase()) {
         throw new BadRequestException('Email is already in use.');
       }
     });
-    const user = await this.userService.create(createUserDto);
+    const createUser = {
+      name: createUserDto.name,
+
+      password: createUserDto.password,
+
+      repeatPassword: createUserDto.repeatPassword,
+
+      email: createUserDto.email.toLowerCase(),
+
+      phoneNumber: createUserDto.phoneNumber,
+    };
+    const user = await this.userService.create(createUser);
     return user;
   }
 
   async signIn(signInDto: SignInDTO): Promise<any> {
-    const user = await this.userService.findOne({ email: signInDto.email });
+    const user = await this.userService.findOne({
+      email: signInDto.email.toLowerCase(),
+    });
     if (!(await user.validatePassword(signInDto.password))) {
       throw new UnauthorizedException();
     }
@@ -44,7 +57,7 @@ export class AuthenticationService {
   }
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findOne({ email: email });
+    const user = await this.userService.findOne({ email: email.toLowerCase() });
     if (user && (await user.validatePassword(pass))) {
       return user;
     }

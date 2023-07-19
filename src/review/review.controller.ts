@@ -9,7 +9,9 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { JwtAuthGuard } from 'src/authentication/jwt-auth.guard';
@@ -69,7 +71,42 @@ export class ReviewController {
     @Body() comment: string,
   ): Promise<ReviewDocument> {
     try {
-      const review = await this.reviewService.update(param._id, comment);
+      const review = await this.reviewService.update(param._id, {
+        comment: comment,
+      });
+      return review;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch('/like/:_id')
+  async LikeReview(
+    @Param() param: any,
+    @Body() action: any,
+  ): Promise<ReviewDocument> {
+    try {
+      const rev = await this.reviewService.find({ _id: param._id });
+      let review;
+      if (action.action == 'like') {
+        rev[0].likedBy.push(action.userId);
+        review = await this.reviewService.update(param._id, {
+          likes: rev[0].likes + 1,
+          likedBy: rev[0].likedBy,
+        });
+      } else if (action.action == 'dislike') {
+        if (rev[0].likes > 0) {
+          review = await this.reviewService.update(param._id, {
+            likes: rev[0].likes - 1,
+            likedBy: rev[0].likedBy.filter(
+              (element) => element !== action.userId,
+            ),
+          });
+        }
+      }
       return review;
     } catch (error) {
       console.log(error);
