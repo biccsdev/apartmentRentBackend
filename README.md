@@ -23,11 +23,11 @@ This repository contains the code for a series of APIs built with NestJS and Mon
 
 ## UML Class
 
-![classDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/4ba50024-52f7-4fad-bccf-ea6a96b2cc87)
+![classDepa](/classDiagram.png)
 
 ## UML Components
 
-![componentDepa](https://github.com/biccsdev/apartmentRentingBackend/assets/86041666/b999c2e6-a4f1-4d77-b37d-2355e6b52cbd)
+![componentDepa](/componentsDiagram.png)
 
 # APIs
 
