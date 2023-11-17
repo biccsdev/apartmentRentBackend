@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains the code for a series of APIs built with NestJS and Mongoose for the conection with the database ( MongoDB ) for an Apartment booking web app.
+This repository contains the code for a series of APIs built with NestJS and Mongoose for the conection with the database ( MongoDB ) for an Apartment booking web app
 
 ## Table of Contents
 
